@@ -1,0 +1,53 @@
+version: "3.7"
+
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.1.1
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+    networks:
+      - logging-network
+    ports:
+      - 9200:9200
+      - 9300:9300
+    healthcheck:
+      test: curl --fail http://localhost || exit 1
+      interval: 600s
+      timeout: 10s
+      retries: 3
+
+  logstash:
+    image: docker.elastic.co/logstash/logstash:7.1.1
+    depends_on:
+      - elasticsearch
+    ports:
+      - 12201:12201/udp
+    volumes:
+      - ./logstash.conf:/usr/share/logstash/pipeline/logstash.conf:ro
+    networks:
+      - logging-network
+    healthcheck:
+      test: curl --fail http://localhost || exit 1
+      interval: 600s
+      timeout: 10s
+      retries: 3
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.1.1
+    depends_on:
+      - logstash
+    ports:
+      - 5601:5601
+    networks:
+      - logging-network
+    healthcheck:
+      test: curl --fail http://localhost || exit 1
+      interval: 600s
+      timeout: 10s
+      retries: 3
+
+
+networks:
+  logging-network:
+    driver: bridge
