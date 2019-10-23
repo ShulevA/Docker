@@ -3,9 +3,12 @@ version: "3.7"
 services:
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.1.1
+    container_name: elasticsearch
     environment:
       - discovery.type=single-node
       - xpack.security.enabled=false
+    ports:
+      - 9200:9200
     networks:
       - logging-network
     healthcheck:
@@ -14,14 +17,11 @@ services:
       timeout: 10s
       retries: 3
 
-  logstash:
+  logstash-indexer:
+    container_name: logstash-indexer
     image: docker.elastic.co/logstash/logstash:7.1.1
-    depends_on:
-      - elasticsearch
-    ports:
-      - 12201:12201/udp
     volumes:
-      - ./logstash.conf:/usr/share/logstash/pipeline/logstash.conf:ro
+      - ./logstash-indexer.conf:/usr/share/logstash/pipeline/logstash.conf:ro
     networks:
       - logging-network
     healthcheck:
@@ -32,8 +32,7 @@ services:
 
   kibana:
     image: docker.elastic.co/kibana/kibana:7.1.1
-    depends_on:
-      - logstash
+    container_name: kibana
     networks:
       - logging-network
     healthcheck:
@@ -42,8 +41,9 @@ services:
       timeout: 10s
       retries: 3
   
-  nginx:
+  nginx-auth:
     image: quay.io/dtan4/nginx-basic-auth-proxy:latest
+    container_name: nginx-auth
     ports:
       - 8080:80
     networks: 
@@ -55,7 +55,16 @@ services:
       - BASIC_AUTH_PASSWORD
       - PROXY_PASS=http://kibana:5601/
 
+  redis-broker:
+    image: redis:latest
+    container_name: redis-broker
+    ports:
+      - 6379:6379
+    networks:
+      - logging-network
+    restart: always
 
 networks:
   logging-network:
     driver: bridge
+    name: logging-network
