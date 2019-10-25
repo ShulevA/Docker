@@ -40,13 +40,13 @@ services:
       interval: 600s
       timeout: 10s
       retries: 3
-  
+
   nginx-auth:
     image: quay.io/dtan4/nginx-basic-auth-proxy:latest
     container_name: nginx-auth
     ports:
       - 8080:80
-    networks: 
+    networks:
       - logging-network
     links:
       - kibana
@@ -58,6 +58,11 @@ services:
   redis-broker:
     image: redis:latest
     container_name: redis-broker
+    volumes:
+      - ./redis.conf:/usr/local/etc/redis/redis.conf
+    command:
+      - redis-server
+      - /usr/local/etc/redis/redis.conf
     ports:
       - 6379:6379
     networks:
@@ -67,4 +72,3 @@ services:
 networks:
   logging-network:
     driver: bridge
-    name: logging-network
