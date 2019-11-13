@@ -20,7 +20,7 @@ actions:
     filters:
     - filtertype: pattern
       kind: prefix
-      value: gelf-
+      value: logs-
       exclude:
     - filtertype: age
       source: name
