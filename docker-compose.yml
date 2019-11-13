@@ -54,6 +54,11 @@ services:
       - BASIC_AUTH_USERNAME
       - BASIC_AUTH_PASSWORD
       - PROXY_PASS=http://kibana:5601/
+    logging:
+      driver: gelf
+      options:
+        gelf-address: "udp://35.172.100.128:12201"
+        tag: "nginx-auth"
 
   redis-broker:
     image: redis:latest
