@@ -23,9 +23,11 @@ actions:
       value: logs-
       exclude:
     - filtertype: age
-      source: name
+      source: field_stats
       direction: older
-      timestring: '%Y.%m.%d'
-      unit: days
-      unit_count: 15
+#       timestring: '%Y.%m.%d'
+      unit: minutes
+      unit_count: 60
+      field: '@timestamp'
+      stats_result: min_value
       exclude:
