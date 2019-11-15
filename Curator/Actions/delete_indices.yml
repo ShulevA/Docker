@@ -26,8 +26,8 @@ actions:
       source: field_stats
       direction: older
 #       timestring: '%Y.%m.%d'
-      unit: minutes
-      unit_count: 60
+      unit: days
+      unit_count: 15
       field: '@timestamp'
       stats_result: min_value
       exclude:
