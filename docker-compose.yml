@@ -7,8 +7,6 @@ services:
     environment:
       - discovery.type=single-node
       - xpack.security.enabled=false
-    ports:
-      - 9200:9200
     networks:
       - logging-network
     healthcheck:
@@ -74,6 +72,17 @@ services:
       - logging-network
     restart: always
 
+  elasticsearch-curator:
+    image: elasticsearch-curator:0.0.0
+    container_name: curator
+    volumes:
+      - ./Curator:/etc/curator
+    networks:
+      - logging-network
+    restart: always
+    tty: true
+
 networks:
   logging-network:
+    name: logging-network
     driver: bridge

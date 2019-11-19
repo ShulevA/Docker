@@ -1,3 +1,3 @@
 #!/bin/bash
 
-curator --config config.yml Actions/delete_indices.yml
+/usr/local/bin/curator --config /etc/curator/config.yml /etc/curator/Actions/delete_indices.yml
