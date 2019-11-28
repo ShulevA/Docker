@@ -12,11 +12,11 @@
 
 Simple architecture of ELK stack:
 
-![](https://www.guru99.com/images/tensorflow/082918_1504_ELKStackTut2.png "Simple architecture of ELK stack")
+![](https://i.ibb.co/HThFcWv/ELK-stack-simple.png "Simple architecture of ELK stack")
 
 Production ELK stack _(our case)_ may look like this:
 
-![](/home/artem/Desktop/ELK stack production_3.jpg "Production architecture of ELK stack")
+![](https://i.ibb.co/HhB1Z43/ELK-stack-production.jpg "Production architecture of ELK stack")
 
 #### 1. Log delivery to logstash-shipper
 
@@ -87,7 +87,7 @@ Username and password are specified in .env file. If index pattern is created, t
 Else, you need to create it in tab Management > Index Patterns > Create index pattern. In our case, index-name is "logs-". 
 Time filter field name is @timestamp. 
 
-![](/home/artem/Desktop/kibana.png)
+![](https://i.ibb.co/hMHrZHn/kibana.png)
 
 #### Delete old logs in ELK
 
