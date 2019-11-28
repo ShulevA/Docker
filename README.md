@@ -16,7 +16,7 @@ Simple architecture of ELK stack:
 
 Production ELK stack _(our case)_ may look like this:
 
-![](/home/artem/Desktop/ELK stack production_2.jpg "Production architecture of ELK stack")
+![](/home/artem/Desktop/ELK stack production_3.jpg "Production architecture of ELK stack")
 
 ####1. Log delivery to logstash-shipper
 
