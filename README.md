@@ -12,7 +12,7 @@
 
 Simple architecture of ELK stack:
 
-![](/home/artem/Desktop/ELK stack simple.png "Simple architecture of ELK stack")
+![](https://www.guru99.com/images/tensorflow/082918_1504_ELKStackTut2.png "Simple architecture of ELK stack")
 
 Production ELK stack _(our case)_ may look like this:
 
