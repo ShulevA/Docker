@@ -98,7 +98,7 @@ Time filter field name is @timestamp.
 curl -XDELETE http://1.2.3.4:9200/index-yyyy.mm*
 ```
 `2)` If you're not using date stamp in index - use Elasticsearch Curator. In a running curator container 
-_(use: docker exec -it \<container id\> bash)_ on ELK server:
+_(use: docker exec -it \<container id\> bash or sh)_ on ELK server:
 
 In the folder /etc/curator
 ```
