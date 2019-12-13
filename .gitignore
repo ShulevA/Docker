@@ -1,4 +1,4 @@
 # ENV files
 *.env
-*.htpasswd_kibana
-*.htpasswd_prometheus
+.htpasswd_kibana
+.htpasswd_prometheus
