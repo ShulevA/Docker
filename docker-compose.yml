@@ -8,7 +8,7 @@ services:
       - discovery.type=single-node
       - xpack.security.enabled=false
     networks:
-      - logging-network
+      - united-network
     healthcheck:
       test: curl --fail http://localhost:9200 || exit 1
       interval: 600s
@@ -21,7 +21,7 @@ services:
     volumes:
       - ./logstash-indexer.conf:/usr/share/logstash/pipeline/logstash.conf:ro
     networks:
-      - logging-network
+      - united-network
     healthcheck:
       test: curl --fail http://localhost:9600 || exit 1
       interval: 600s
@@ -32,31 +32,29 @@ services:
     image: docker.elastic.co/kibana/kibana:7.1.1
     container_name: kibana
     networks:
-      - logging-network
+      - united-network
     healthcheck:
       test: curl --fail http://localhost:5601 || exit 1
       interval: 600s
       timeout: 10s
       retries: 3
 
-  nginx-auth:
-    image: quay.io/dtan4/nginx-basic-auth-proxy:latest
-    container_name: nginx-auth
-    ports:
-      - 8080:80
+  nginx-proxy:
+    image: nginx:1.17.6
+    container_name: nginx-proxy
     networks:
-      - logging-network
-    links:
-      - kibana
-    environment:
-      - BASIC_AUTH_USERNAME
-      - BASIC_AUTH_PASSWORD
-      - PROXY_PASS=http://kibana:5601/
+      - united-network
+    ports:
+      - 80:80
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/.htpasswd_kibana:/etc/nginx/.htpasswd_kibana
+      - ./nginx/.htpasswd_prometheus:/etc/nginx/.htpasswd_prometheus
     logging:
       driver: gelf
       options:
         gelf-address: "udp://35.172.100.128:12201"
-        tag: "nginx-auth"
+        tag: "nginx-proxy"
 
   redis-broker:
     image: redis:latest
@@ -69,7 +67,7 @@ services:
     ports:
       - 6379:6379
     networks:
-      - logging-network
+      - united-network
     restart: always
 
   elasticsearch-curator:
@@ -78,11 +76,11 @@ services:
     volumes:
       - ./Curator:/etc/curator
     networks:
-      - logging-network
+      - united-network
     restart: always
     tty: true
 
 networks:
-  logging-network:
-    name: logging-network
+  united-network:
+    name: united-network
     driver: bridge
