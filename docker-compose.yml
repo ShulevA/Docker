@@ -39,9 +39,9 @@ services:
       timeout: 10s
       retries: 3
 
-  nginx-proxy:
+  nginx-reverse-proxy:
     image: nginx:1.17.6
-    container_name: nginx-proxy
+    container_name: nginx-reverse-proxy
     networks:
       - united-network
     ports:
