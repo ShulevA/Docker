@@ -3,7 +3,7 @@
 A reverse proxy is like a middleman (proxy) between a user (client) making a request to that proxy
 and that proxy making requests and retrieving its results from other servers.
 
-![](https://www.pvsm.ru/images/2019/06/18/odin-iz-sotni-sposobov-publikacii-neskolkih-production-proektov-na-odnom-servere.png))
+![](https://www.pvsm.ru/images/2019/06/18/odin-iz-sotni-sposobov-publikacii-neskolkih-production-proektov-na-odnom-servere.png)
 
 ### 1. Nginx in docker
 
